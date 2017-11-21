@@ -8,9 +8,7 @@ package com.tcc.pcv_ejb.calculadores_peso;
 import com.tcc.pcv_ejb.cities_info.Cidade;
 import com.tcc.regressao_ejb.Regressor;
 import com.tcc.regressao_ejb.RegressorRemote;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 import javax.ejb.Stateless;
 
 /**
@@ -20,7 +18,7 @@ import javax.ejb.Stateless;
 @Stateless
 public class CalculadorPeso_Regressao extends CalculadorPeso {
     
-    private RegressorRemote regressor = new Regressor();
+    private final RegressorRemote regressor = new Regressor();
     
     public CalculadorPeso_Regressao() {
         thetas = new HashMap<>();
@@ -47,14 +45,12 @@ public class CalculadorPeso_Regressao extends CalculadorPeso {
                 result = calculaEsperaRestaurant(c1, theta, timeArrival);
                 break;
             case Bank:
-                // TODO
-                //if (theta == null) theta = regressor.getThetaAsVectorForBankHistory(c1.getId());
-                //result = calculaEsperaBank(c1, theta, timeArrival);
+                if (theta == null) theta = regressor.getThetaAsVectorForBankHistory(c1.getId());
+                result = calculaEsperaBank(c1, theta, timeArrival);
                 break;
             case Groceries:
-                // TODO
-                //if (theta == null) theta = regressor.getThetaAsVectorForGroceryHistory(c1.getId());
-                //result = calculaEsperaGroceries(c1, theta, timeArrival);
+                if (theta == null) theta = regressor.getThetaAsVectorForGroceryHistory(c1.getId());
+                result = calculaEsperaGroceries(c1, theta, timeArrival);
                 break;
             default:
                 break;
@@ -77,13 +73,21 @@ public class CalculadorPeso_Regressao extends CalculadorPeso {
     }
     
     private double calculaEsperaBank(Cidade c1, Double[] theta, int timeArrival) {
-        double result = 0.0;
+        double result;
+        result = theta[0] * c1.getDow();
+        result += theta[1] * timeArrival;
+        result += theta[2] * c1.getTask();
+        result += theta[3] * c1.getIssue();
         
         return result;
     }
     
     private double calculaEsperaGroceries(Cidade c1, Double[] theta, int timeArrival) {
-        double result = 0.0;
+        double result;
+        result = theta[0] * c1.getDow();
+        result += theta[1] * timeArrival;
+        result += theta[2] * c1.getGroceriesSize();
+        result += theta[3] * c1.getIssue();
         
         return result;
     }
