@@ -20,13 +20,13 @@ public abstract class CalculadorPeso {
     public int calculaPeso(List<Cidade> t){
         int peso = 0;
         for(int i = 0; i < t.size() - 1; i++){
-            peso += calculaDistancia(t.get(i), t.get(i + 1)) + calculaEspera(t.get(i), 0);
+            peso += calculaDistancia(t.get(i), t.get(i + 1)) + calculaEsperaEmSeg(t.get(i), 0);
         }
         return peso;
     }
     
     abstract int calculaDistancia(Cidade c1, Cidade c2);
     
-    abstract double calculaEspera(Cidade c1, int timeArrivalSOD);
+    abstract double calculaEsperaEmSeg(Cidade c1, int timeArrivalSOD);
     
 }

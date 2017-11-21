@@ -21,7 +21,7 @@ public class CalculadorPeso_Default extends CalculadorPeso {
     }
     
     @Override
-    double calculaEspera(Cidade c1, int timeArrival){
+    double calculaEsperaEmSeg(Cidade c1, int timeArrival){
         return 0;
     }
 }

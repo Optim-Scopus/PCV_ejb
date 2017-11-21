@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class GerenciadorTour {
     
     // Holds our cities
-    private ArrayList cidades = new ArrayList<Cidade>();
+    private ArrayList<Cidade> cidades = new ArrayList<>();
 
     // Adds a destination city
     public void addCidade(Cidade city) {

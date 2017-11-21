@@ -32,7 +32,7 @@ public class CalculadorPeso_Regressao extends CalculadorPeso {
     }
     
     @Override
-    double calculaEspera(Cidade c1, int timeArrival){
+    double calculaEsperaEmSeg(Cidade c1, int timeArrival){
         Double[] theta = thetas.get(c1.getId());
         
         //Logger.getLogger(CalculadorPeso_Regressao.class.getName()).log(Level.SEVERE, "Fucking hey");
