@@ -5,10 +5,13 @@
  */
 package com.tcc.pcv_ejb.mutadores;
 
+import com.tcc.pcv_ejb.Tour;
+import com.tcc.pcv_ejb.dto.Cidade;
+
 /**
  *
  * @author Ken
  */
-public class Mutador_Default extends Mutador {
+public class Mutador_Default implements Mutador {
     
 }

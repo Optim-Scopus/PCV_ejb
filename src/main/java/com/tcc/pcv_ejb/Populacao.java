@@ -10,40 +10,44 @@ package com.tcc.pcv_ejb;
  * @author Ken
  */
 public class Populacao {
-    // Holds populacao of tours
-    Tour[] tours;
-    
-    private final PCVStrategy strat;
-    
-    // Construct a populacao
+
+    private Tour[] tours;
+
     public Populacao(int tamanhoPop, boolean init, PCVStrategy strat) {
-        this.strat = strat;
         tours = new Tour[tamanhoPop];
-        // If we need to init a populacao of tours do so
+        // Se não queremos o Tour vazio, inicializamos
         if (init) {
             // Loop and create individuals
-            for (int i = 0; i < tamanhoPop(); i++) {
-                Tour novoTour = new Tour(strat, strat.getGeradorIndividuo().geraIndividuo());
+            for (int i = 0; i < tours.length; i++) {
+                Tour novoTour = new Tour(strat.getGeradorIndividuo().geraIndividuo(), strat);
                 saveTour(i, novoTour);
             }
         }
     }
     
-    // Saves a tour
+    Tour[] getTours(){
+      return tours;
+    }
+    
+    void setTours(Tour[] tours) {
+      this.tours = tours;
+    }
+    
+    // Salva um tour
     public void saveTour(int index, Tour tour) {
         tours[index] = tour;
     }
     
-    // Gets a tour from populacao
+    // Pega um Tour da População
     public Tour getTour(int index) {
         return tours[index];
     }
 
-    // Gets the best tour in the populacao
+    // Pega o Tour de menor custo
     public Tour getFittest() {
         Tour fittest = tours[0];
         // Loop through individuals to find fittest
-        for (int i = 1; i < tamanhoPop(); i++) {
+        for (int i = 0; i < tamanhoPop(); i++) {
             if (fittest.getFitness() <= getTour(i).getFitness()) {
                 fittest = getTour(i);
             }
@@ -51,7 +55,7 @@ public class Populacao {
         return fittest;
     }
 
-    // Gets populacao size
+    // Retorna o tamanho da população
     public int tamanhoPop() {
         return tours.length;
     }

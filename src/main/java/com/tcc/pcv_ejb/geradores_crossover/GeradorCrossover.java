@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tcc.pcv_ejb.cities_info;
+package com.tcc.pcv_ejb.geradores_crossover;
+
+import com.tcc.pcv_ejb.Tour;
 
 /**
  *
- * @author luiz
+ * @author Ken
  */
-public enum CidadeType {
-    Restaurant,
-    Bank,
-    Groceries;
+public interface GeradorCrossover {
+    
 }

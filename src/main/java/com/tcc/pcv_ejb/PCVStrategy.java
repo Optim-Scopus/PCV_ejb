@@ -7,7 +7,7 @@ package com.tcc.pcv_ejb;
 
 import com.tcc.pcv_ejb.calculadores_peso.CalculadorPeso;
 import com.tcc.pcv_ejb.geradores_individuos.GeradorIndividuo;
-import com.tcc.pcv_ejb.geradores_populacoes.GeradorPopulacao;
+import com.tcc.pcv_ejb.geradores_crossover.GeradorCrossover;
 import com.tcc.pcv_ejb.mutadores.Mutador;
 
 /**
@@ -19,19 +19,19 @@ public class PCVStrategy {
     private final Mutador m;
     private final CalculadorPeso cp;
     private final GeradorIndividuo gi;
-    private final GeradorPopulacao gp;
-    private final int qtdCidades;
+    private final GeradorCrossover gp;
+    private final int qtdCategorias;
     
-    public PCVStrategy(Mutador m, CalculadorPeso cp, GeradorIndividuo gi, GeradorPopulacao gp, int qtdCidades){
+    public PCVStrategy(Mutador m, CalculadorPeso cp, GeradorIndividuo gi, GeradorCrossover gp, int qtdCategorias){
         this.m = m;
         this.cp = cp;
         this.gi = gi;
         this.gp = gp;
-        this.qtdCidades = qtdCidades;
+        this.qtdCategorias = qtdCategorias;
     }
 
-    public int getQtdCidades() {
-        return qtdCidades;
+    public int getQtdCategorias() {
+        return qtdCategorias;
     }
     
     public Mutador getMutador(){
@@ -46,7 +46,7 @@ public class PCVStrategy {
         return gi;
     }
     
-    public GeradorPopulacao getGeradorPopulacao(){
+    public GeradorCrossover getGeradorPopulacao(){
         return gp;
     }
     

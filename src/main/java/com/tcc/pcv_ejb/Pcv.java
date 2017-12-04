@@ -5,10 +5,10 @@
  */
 package com.tcc.pcv_ejb;
 
-import com.tcc.pcv_ejb.cities_info.Cidade;
+import com.tcc.pcv_ejb.dto.Cidade;
 import com.tcc.pcv_ejb.calculadores_peso.CalculadorPeso_Regressao;
 import com.tcc.pcv_ejb.geradores_individuos.GeradorIndividuo_Default;
-import com.tcc.pcv_ejb.geradores_populacoes.GeradorPopulacao_Default;
+import com.tcc.pcv_ejb.geradores_crossover.GeradorCrossover_Default;
 import com.tcc.pcv_ejb.mutadores.Mutador_Default;
 
 /**
@@ -17,13 +17,13 @@ import com.tcc.pcv_ejb.mutadores.Mutador_Default;
  */
 public class Pcv {
     
-    private static final GerenciadorTour gt = new GerenciadorTour();
+    private static final GerenciadorCategoria gc = new GerenciadorCategoria();
     // Aqui definimos quais instâSncias de cada módulo será utilizado
     private static final PCVStrategy strat = new PCVStrategy(
             new Mutador_Default(), 
             new CalculadorPeso_Regressao(), 
-            new GeradorIndividuo_Default(20, gt),
-            new GeradorPopulacao_Default(),
+            new GeradorIndividuo_Default(20, gc),
+            new GeradorCrossover_Default(),
             20
     );
     

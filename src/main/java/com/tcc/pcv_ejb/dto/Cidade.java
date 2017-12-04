@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tcc.pcv_ejb.cities_info;
+package com.tcc.pcv_ejb.dto;
 
 /**
  *
@@ -64,6 +64,19 @@ public class Cidade {
 
     public CidadeType getType() {
         return type;
+    }
+    
+    public int getCategoria() {
+        switch (type) {
+            case Restaurant:
+                return 0;
+            case Bank:
+                return 1;
+            case Groceries:
+                return 2;
+            default:
+                return 0;
+        }
     }
     
     public int getX(){

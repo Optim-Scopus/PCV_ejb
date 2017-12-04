@@ -5,10 +5,12 @@
  */
 package com.tcc.pcv_ejb.mutadores;
 
+import com.tcc.pcv_ejb.Tour;
+
 /**
  *
  * @author Ken
  */
-public abstract class Mutador {
+public interface Mutador {
     
 }

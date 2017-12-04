@@ -5,7 +5,7 @@
  */
 package com.tcc.pcv_ejb.calculadores_peso;
 
-import com.tcc.pcv_ejb.cities_info.Cidade;
+import com.tcc.pcv_ejb.dto.Cidade;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +24,8 @@ public abstract class CalculadorPeso {
         }
         return peso;
     }
+    
+    public abstract Double[] getThetaByRestaurantId(Long id);
     
     abstract int calculaDistancia(Cidade c1, Cidade c2);
     

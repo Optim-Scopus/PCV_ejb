@@ -5,8 +5,9 @@
  */
 package com.tcc.pcv_ejb;
 
-import com.tcc.pcv_ejb.cities_info.Cidade;
+import com.tcc.pcv_ejb.dto.Cidade;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ import java.util.List;
 public class Tour {
     
     // Holds our tour of cities
-    private List<Cidade> tour = new ArrayList<>();
+    private ArrayList<Cidade> tour = new ArrayList<Cidade>();
     // Cache
     private double fitness = 0;
     private int peso = 0;
@@ -26,14 +27,18 @@ public class Tour {
     // Constructs a blank tour
     public Tour(PCVStrategy strat){
         this.strat = strat;
-        for (int i = 0; i < strat.getQtdCidades(); i++) {
+        for (int i = 0; i < strat.getQtdCategorias(); i++) {
             tour.add(null);
         }
     }
     
-    public Tour(PCVStrategy strat, ArrayList tour){
+    public Tour(ArrayList tour, PCVStrategy strat){
         this.strat = strat;
         this.tour = tour;
+    }
+    
+    public Tour copy() {
+      return new Tour(tour, strat);
     }
 
     // Gets a cidade from the tour
@@ -47,6 +52,10 @@ public class Tour {
         // If the tours been altered we need to reset the fitness and peso
         fitness = 0;
         peso = 0;
+    }
+    
+    public void addCidade(Cidade c) {
+      tour.add(c);
     }
     
     // Creates a random individual
@@ -81,14 +90,6 @@ public class Tour {
         return tour.contains(cidade);
     }
     
-    public List<Long> getCitiesAsIdsList(){
-        List<Long> returnList = new ArrayList<>();
-        for (Cidade city : tour) {
-            returnList.add(city.getId());
-        }
-        return returnList;
-    }
-    
     @Override
     public String toString() {
         String geneString = "|";
@@ -96,5 +97,26 @@ public class Tour {
             geneString += getCidade(i)+"|";
         }
         return geneString;
+    }
+    
+    Cidade getCidadeFromCategoria(int c){
+      for(int i = 0; i < tourSize(); i++) {
+        if(tour.get(i).getCategoria() == c) {
+          return tour.get(i);
+        }
+      }
+      return null;
+    }
+    
+    public void shuffle(){
+        Collections.shuffle(tour);
+    }
+    
+    public List<Long> getCitiesAsIdsList(){
+        List<Long> returnList = new ArrayList<>();
+        for (Cidade city : tour) {
+            returnList.add(city.getId());
+        }
+        return returnList;
     }
 }

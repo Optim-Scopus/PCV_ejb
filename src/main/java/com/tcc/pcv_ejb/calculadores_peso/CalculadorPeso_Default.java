@@ -5,7 +5,7 @@
  */
 package com.tcc.pcv_ejb.calculadores_peso;
 
-import com.tcc.pcv_ejb.cities_info.Cidade;
+import com.tcc.pcv_ejb.dto.Cidade;
 
 /**
  *
@@ -23,5 +23,10 @@ public class CalculadorPeso_Default extends CalculadorPeso {
     @Override
     double calculaEsperaEmSeg(Cidade c1, int timeArrival){
         return 0;
+    }
+
+    @Override
+    public Double[] getThetaByRestaurantId(Long id) {
+        return new Double[0];
     }
 }
