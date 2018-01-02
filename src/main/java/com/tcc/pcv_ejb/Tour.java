@@ -20,7 +20,7 @@ public class Tour {
     private ArrayList<Cidade> tour = new ArrayList<Cidade>();
     // Cache
     private double fitness = 0;
-    private int peso = 0;
+    private double peso = 0.0;
     
     private final PCVStrategy strat;
     
@@ -73,7 +73,7 @@ public class Tour {
     }
     
     // Gets the total peso of the tour
-    public int getPeso(){
+    public double getPeso(){
         if (peso == 0) {
             peso = strat.getCalculadorPeso().calculaPeso(tour);
         }

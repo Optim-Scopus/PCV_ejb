@@ -13,130 +13,46 @@ public class Cidade {
     
     Long id;
 
-    int x;
+    Float x;
     
-    int y;
+    Float y;
     
     CidadeType type;
     
-    private int dow;
+    int categoriaNLoop;
     
-    private int groupSize;
-    
-    private int groceriesSize;
-    
-    private int task;
-    
-    private int issue;
-    
-    private int specialDate;
-    
-    public Cidade(Long id, CidadeType type, int x, int y, int dow, int groupSize, int issue, int specialDate) {
+    public Cidade(Long id, Float x, Float y) {
         this.x = x;
         this.y = y;
         this.id = id;
-        this.type = type;
-        this.dow = dow;
-        this.groupSize = groupSize;
-        this.issue = issue;
-        this.specialDate = specialDate;
     }
     
-    public Cidade(Long id, CidadeType type, int x, int y, int dow, int groceriesSize, int issue) {
+    public Cidade(Long id, Float x, Float y, CidadeType type, int categoriaNLoop) {
         this.x = x;
         this.y = y;
         this.id = id;
         this.type = type;
-        this.dow = dow;
-        this.groupSize = groceriesSize;
-        this.issue = issue;
+        this.categoriaNLoop = categoriaNLoop;
     }
     
-    public Cidade(Long id, CidadeType type, int x, int y, int dow, int task, int issue, boolean isBank) {
-        this.x = x;
-        this.y = y;
-        this.id = id;
-        this.type = type;
-        this.dow = dow;
-        this.groupSize = task;
-        this.issue = issue;
+    public int getCategoria(){
+        return categoriaNLoop;
     }
 
     public CidadeType getType() {
         return type;
     }
     
-    public int getCategoria() {
-        switch (type) {
-            case Restaurant:
-                return 0;
-            case Bank:
-                return 1;
-            case Groceries:
-                return 2;
-            default:
-                return 0;
-        }
-    }
-    
-    public int getX(){
+    public Float getX(){
         return this.x;
     }
     
-    public int getY(){
-        return this.y;
+    public Float getY(){
+        return y;
     }
     
     public Long getId(){
-        return this.id;
-    }
-
-    public int getDow() {
-        return dow;
-    }
-
-    public void setDow(int dow) {
-        this.dow = dow;
-    }
-
-    public int getGroupSize() {
-        return groupSize;
-    }
-
-    public void setGroupSize(int groupSize) {
-        this.groupSize = groupSize;
-    }
-
-    public int getGroceriesSize() {
-        return groceriesSize;
-    }
-
-    public void setGroceriesSize(int groceriesSize) {
-        this.groceriesSize = groceriesSize;
-    }
-
-    public int getTask() {
-        return task;
-    }
-
-    public void setTask(int task) {
-        this.task = task;
-    }
-
-    public int getIssue() {
-        return issue;
-    }
-
-    public void setIssue(int issue) {
-        this.issue = issue;
-    }
-
-    public int getSpecialDate() {
-        return specialDate;
-    }
-
-    public void setSpecialDate(int specialDate) {
-        this.specialDate = specialDate;
+        return id;
     }
     
     @Override

@@ -21,7 +21,7 @@ public class Pcv {
     // Aqui definimos quais instâSncias de cada módulo será utilizado
     private static final PCVStrategy strat = new PCVStrategy(
             new Mutador_Default(), 
-            new CalculadorPeso_Regressao(), 
+            new CalculadorPeso_Regressao(0, new Cidade(-1L,0F,0F)), 
             new GeradorIndividuo_Default(20, gc),
             new GeradorCrossover_Default(),
             20

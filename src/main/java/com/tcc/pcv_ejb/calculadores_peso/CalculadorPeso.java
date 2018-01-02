@@ -15,20 +15,29 @@ import java.util.Map;
  */
 public abstract class CalculadorPeso {
     
-    Map<Long, Double[]> thetas;
+    Map<Long, List<Double>> thetas;
+    private final double timeArrival;
+    
+    private final Cidade c0;
+    
+    public CalculadorPeso(double timeArrival, Cidade c0) {
+        this.timeArrival = timeArrival;
+        this.c0 = c0;
+    }
                     
-    public int calculaPeso(List<Cidade> t){
-        int peso = 0;
+    public double calculaPeso(List<Cidade> t){
+        double peso = calculaDistancia(c0, t.get(0));
+        double now = timeArrival;
         for(int i = 0; i < t.size() - 1; i++){
-            peso += calculaDistancia(t.get(i), t.get(i + 1)) + calculaEsperaEmSeg(t.get(i), 0);
+            double waitTime = calculaEsperaEmSeg(t.get(i), now);
+            now += waitTime;
+            peso += calculaDistancia(t.get(i), t.get(i + 1)) + waitTime;
         }
         return peso;
     }
     
-    public abstract Double[] getThetaByRestaurantId(Long id);
+    abstract double calculaDistancia(Cidade c1, Cidade c2);
     
-    abstract int calculaDistancia(Cidade c1, Cidade c2);
-    
-    abstract double calculaEsperaEmSeg(Cidade c1, int timeArrivalSOD);
+    abstract double calculaEsperaEmSeg(Cidade c1, double timeArrivalSOD);
     
 }

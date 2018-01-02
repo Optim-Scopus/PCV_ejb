@@ -6,46 +6,35 @@
 package com.tcc.pcv_ejb.calculadores_peso;
 
 import com.tcc.pcv_ejb.dto.Cidade;
-import com.tcc.regressao_ejb.Regressor;
-import com.tcc.regressao_ejb.RegressorRemote;
+import com.tcc.pcv_ejb.dto.RegressorInputDto;
+import com.tcc.pcv_ejb.proxyWs.RegressorWsProxy;
 import java.util.HashMap;
-import javax.ejb.Stateless;
+import java.util.List;
 
 /**
  *
  * @author luiz
  */
-@Stateless
 public class CalculadorPeso_Regressao extends CalculadorPeso {
     
-    private final RegressorRemote regressor = new Regressor();
+    private RegressorWsProxy regressorProxy = new RegressorWsProxy();
+    private final static double SPEED = 50.0;
     
-    public CalculadorPeso_Regressao() {
+    public CalculadorPeso_Regressao(double timeArrival, Cidade c0) {
+        super(timeArrival, c0);
         thetas = new HashMap<>();
     }
     
-    @Override        
-    public Double[] getThetaByRestaurantId(Long id){
-        /*Double[] theta = thetas.get(id);
-        if (theta == null) {
-            theta = regressor.getThetaAsVectorForRestaurant(id);
-        }
-        return theta;*/
-        
-        return thetas.get(id) != null ? 
-                thetas.get(id) : regressor.getThetaAsVectorForRestaurant(id);
+    @Override
+    double calculaDistancia(Cidade c1, Cidade c2){
+        float xDistance = Math.abs(c1.getX() - c2.getX());
+        float yDistance = Math.abs(c1.getY() - c2.getY());
+        return (Math.sqrt((xDistance*xDistance) + (yDistance*yDistance))/SPEED);
     }
     
     @Override
-    int calculaDistancia(Cidade c1, Cidade c2){
-        int xDistance = Math.abs(c1.getX() - c2.getX());
-        int yDistance = Math.abs(c1.getY() - c2.getY());
-        return (int) Math.sqrt((xDistance*xDistance) + (yDistance*yDistance));
-    }
-    
-    @Override
-    double calculaEsperaEmSeg(Cidade c1, int timeArrival){
-        Double[] theta = thetas.get(c1.getId());
+    double calculaEsperaEmSeg(Cidade c1, double timeArrival){
+        List<Double> theta = thetas.get(c1.getId());
         
         //Logger.getLogger(CalculadorPeso_Regressao.class.getName()).log(Level.SEVERE, "Fucking hey");
         
@@ -53,16 +42,16 @@ public class CalculadorPeso_Regressao extends CalculadorPeso {
         
         switch (c1.getType()) {
             case Restaurant:
-                if (theta == null) theta = regressor.getThetaAsVectorForRestaurant(c1.getId());
-                result = calculaEsperaRestaurant(c1, theta, timeArrival);
+                if (theta == null) theta = regressorProxy.getThetaAsVectorForRestaurant(c1.getId());
+                result = calculaEsperaRestaurant(theta, timeArrival);
                 break;
             case Bank:
-                if (theta == null) theta = regressor.getThetaAsVectorForBank(c1.getId());
-                result = calculaEsperaBank(c1, theta, timeArrival);
+                if (theta == null) theta = regressorProxy.getThetaAsVectorForBank(c1.getId());
+                result = calculaEsperaBank(theta, timeArrival);
                 break;
             case Groceries:
-                if (theta == null) theta = regressor.getThetaAsVectorForGrocery(c1.getId());
-                result = calculaEsperaGroceries(c1, theta, timeArrival);
+                if (theta == null) theta = regressorProxy.getThetaAsVectorForGrocery(c1.getId());
+                result = calculaEsperaGroceries(theta, timeArrival);
                 break;
             default:
                 break;
@@ -73,36 +62,39 @@ public class CalculadorPeso_Regressao extends CalculadorPeso {
         return result;
     }
     
-    private double calculaEsperaRestaurant(Cidade c1, Double[] theta, int timeArrival) {
+    private double calculaEsperaRestaurant(List<Double> theta, double timeArrival) {
+        RegressorInputDto dto = RegressorInputDto.getDto();
         double result;
-        result = theta[0];
-        result += theta[1] * c1.getDow();
-        result += theta[2] * timeArrival;
-        result += theta[3] * c1.getGroupSize();
-        result += theta[4] * c1.getIssue();
-        result += theta[5] * c1.getSpecialDate();
+        result = theta.get(0);
+        result += theta.get(1) * dto.getDow();
+        result += theta.get(2) * timeArrival;
+        result += theta.get(3) * dto.getGroupSize();
+        result += theta.get(4) * dto.getIssue();
+        result += theta.get(5) * dto.getSpecialDate();
         
         return result;
     }
     
-    private double calculaEsperaBank(Cidade c1, Double[] theta, int timeArrival) {
+    private double calculaEsperaBank(List<Double> theta, double timeArrival) {
+        RegressorInputDto dto = RegressorInputDto.getDto();
         double result;
-        result = theta[0];
-        result += theta[1] * c1.getDow();
-        result += theta[2] * timeArrival;
-        result += theta[3] * c1.getTask();
-        result += theta[4] * c1.getIssue();
+        result = theta.get(0);
+        result += theta.get(1) * dto.getDow();
+        result += theta.get(2) * timeArrival;
+        result += theta.get(3) * dto.getTask();
+        result += theta.get(4) * dto.getIssue();
         
         return result;
     }
     
-    private double calculaEsperaGroceries(Cidade c1, Double[] theta, int timeArrival) {
+    private double calculaEsperaGroceries(List<Double> theta, double timeArrival) {
+        RegressorInputDto dto = RegressorInputDto.getDto();
         double result;
-        result = theta[0];
-        result += theta[1] * c1.getDow();
-        result += theta[2] * timeArrival;
-        result += theta[3] * c1.getGroceriesSize();
-        result += theta[4] * c1.getIssue();
+        result = theta.get(0);
+        result += theta.get(1) * dto.getDow();
+        result += theta.get(2) * timeArrival;
+        result += theta.get(3) * dto.getGroceriesSize();
+        result += theta.get(4) * dto.getIssue();
         
         return result;
     }
